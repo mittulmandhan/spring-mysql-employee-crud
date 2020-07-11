@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.employee.dto.EmployeeRequestDTO;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
@@ -25,11 +26,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return optional.get();
 	}
 
-	public Employee add(final Employee employee) {
+	public Employee add(final EmployeeRequestDTO employeeDTO) {
+		Employee employee = new Employee();
+		employee.setName(employeeDTO.getName());
+		employee.setSalary(employeeDTO.getSalary());
+		employee.setTeamName(employeeDTO.getTeamName());
 		return employeeRepository.save(employee);
 	}
 
-	public Employee update(final Employee employee) {
+	public Employee update(final EmployeeRequestDTO employeeDTO) {
+		Employee employee = new Employee();
+		employee.setId(employeeDTO.getId());
+		employee.setName(employeeDTO.getName());
+		employee.setSalary(employeeDTO.getSalary());
+		employee.setTeamName(employeeDTO.getTeamName());
 		return employeeRepository.save(employee);
 	}
 

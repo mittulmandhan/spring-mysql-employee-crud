@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.employee.dto.EmployeeRequestDTO;
 import com.employee.model.Employee;
 import com.employee.service.impl.EmployeeServiceImpl;
 
@@ -33,13 +34,13 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/add")
-	public Employee add(@RequestBody final Employee employee) {
-		return employeeService.add(employee);
+	public Employee add(@RequestBody final EmployeeRequestDTO employeeDTO) {
+		return employeeService.add(employeeDTO);
 	}
 
 	@PutMapping("/update")
-	public Employee update(@RequestBody final Employee employee) {
-		return employeeService.update(employee);
+	public Employee update(@RequestBody final EmployeeRequestDTO employeeDTO) {
+		return employeeService.update(employeeDTO);
 	}
 
 	@DeleteMapping("/{id}")

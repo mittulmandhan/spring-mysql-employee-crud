@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.model.Employee;
-import com.employee.service.impl.EmployeeServiceImpl;
+import com.employee.service.EmployeeService;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
 	@Autowired
-	private EmployeeServiceImpl employeeService;
+	private EmployeeService employeeService;
 
 	@GetMapping("/all")
 	public List<Employee> getAll() {

@@ -1,6 +1,7 @@
-package com.employeecrud.springemployeecrud.controller;
+package com.employee.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,15 +12,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.employeecrud.springemployeecrud.model.Employee;
-import com.employeecrud.springemployeecrud.repository.EmployeeRepository;
+
+import com.employee.model.Employee;
+import com.employee.repository.EmployeeRepository;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
 	@Autowired
-	EmployeeRepository employeeRepository;
+	private EmployeeRepository employeeRepository;
 
 	@GetMapping("/all")
 	public List<Employee> getAll() {
@@ -28,7 +30,8 @@ public class EmployeeController {
 
 	@GetMapping("/{id}")
 	public Employee get(@PathVariable final Integer id) {
-		return employeeRepository.getOne(id);
+		Optional<Employee> optional = employeeRepository.findById(id);
+		return optional.get();
 	}
 
 	@PostMapping("/add")

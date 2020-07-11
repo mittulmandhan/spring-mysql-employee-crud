@@ -1,17 +1,15 @@
-package com.employeecrud.springemployeecrud.model;
+package com.employee.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
 
-@Entity(name = "employee")
+@Entity
 public class Employee {
 
 	@Id
 	@GeneratedValue
-	@PrimaryKeyJoinColumn
 	@Column(name = "id")
 	private Integer id;
 

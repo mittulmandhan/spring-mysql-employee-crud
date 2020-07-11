@@ -27,20 +27,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public Employee add(final EmployeeRequestDTO employeeDTO) {
-		Employee employee = new Employee();
-		employee.setName(employeeDTO.getName());
-		employee.setSalary(employeeDTO.getSalary());
-		employee.setTeamName(employeeDTO.getTeamName());
+		Employee employee = prepareEmployee(employeeDTO);
 		return employeeRepository.save(employee);
 	}
 
 	public Employee update(final EmployeeRequestDTO employeeDTO) {
+		Employee employee = prepareEmployee(employeeDTO);
+		return employeeRepository.save(employee);
+	}
+
+	private Employee prepareEmployee(final EmployeeRequestDTO employeeDTO) {
 		Employee employee = new Employee();
-		employee.setId(employeeDTO.getId());
+		if (employeeDTO.getId() != null)
+			employee.setId(employeeDTO.getId());
 		employee.setName(employeeDTO.getName());
 		employee.setSalary(employeeDTO.getSalary());
 		employee.setTeamName(employeeDTO.getTeamName());
-		return employeeRepository.save(employee);
+		return employee;
 	}
 
 	public void delete(final Integer id) {

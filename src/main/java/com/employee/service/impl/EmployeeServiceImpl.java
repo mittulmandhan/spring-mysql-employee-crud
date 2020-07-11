@@ -27,13 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		while (i.hasNext()) {
 			Employee emp = i.next();
-			EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
-
-			// convert Employee to EmployeeResponseDTO
-			empResponse.setId(emp.getId());
-			empResponse.setName(emp.getName());
-			empResponse.setSalary(emp.getSalary());
-			empResponse.setTeamName(emp.getTeamName());
+			EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
 
 			// put EmployeeResponseDTO object in employeeResponseList
 			employeeResponseList.add(empResponse);
@@ -45,13 +39,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeResponseDTO get(final Integer id) {
 		Optional<Employee> optional = employeeRepository.findById(id);
 		Employee emp = optional.get();
-		EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
 
-		// convert Employee to EmployeeResponseDTO
-		empResponse.setId(emp.getId());
-		empResponse.setName(emp.getName());
-		empResponse.setSalary(emp.getSalary());
-		empResponse.setTeamName(emp.getTeamName());
+		EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
 
 		return empResponse;
 	}
@@ -60,13 +49,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee added and response received in emp
 		Employee emp = employeeRepository.save(employee);
-		EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
 
-		// convert Employee to EmployeeResponseDTO
-		empResponse.setId(emp.getId());
-		empResponse.setName(emp.getName());
-		empResponse.setSalary(emp.getSalary());
-		empResponse.setTeamName(emp.getTeamName());
+		EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
 
 		return empResponse;
 	}
@@ -75,6 +59,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee updated and response received in emp
 		Employee emp = employeeRepository.save(employee);
+
+		EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
+
+		return empResponse;
+	}
+
+	public void delete(final Integer id) {
+		employeeRepository.deleteById(id);
+	}
+
+	private EmployeeResponseDTO prepareEmployeeResponseDTO(Employee emp) {
 		EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
 
 		// convert Employee to EmployeeResponseDTO
@@ -82,7 +77,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		empResponse.setName(emp.getName());
 		empResponse.setSalary(emp.getSalary());
 		empResponse.setTeamName(emp.getTeamName());
-
 		return empResponse;
 	}
 
@@ -94,10 +88,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setSalary(employeeDTO.getSalary());
 		employee.setTeamName(employeeDTO.getTeamName());
 		return employee;
-	}
-
-	public void delete(final Integer id) {
-		employeeRepository.deleteById(id);
 	}
 
 }

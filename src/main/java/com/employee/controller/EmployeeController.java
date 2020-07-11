@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.dto.EmployeeRequestDTO;
+import com.employee.dto.EmployeeResponseDTO;
 import com.employee.model.Employee;
 import com.employee.service.EmployeeService;
 
@@ -24,22 +25,22 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 
 	@GetMapping("/all")
-	public List<Employee> getAll() {
+	public List<EmployeeResponseDTO> getAll() {
 		return employeeService.getAll();
 	}
 
 	@GetMapping("/{id}")
-	public Employee get(@PathVariable final Integer id) {
+	public EmployeeResponseDTO get(@PathVariable final Integer id) {
 		return employeeService.get(id);
 	}
 
 	@PostMapping("/add")
-	public Employee add(@RequestBody final EmployeeRequestDTO employeeDTO) {
+	public EmployeeResponseDTO add(@RequestBody final EmployeeRequestDTO employeeDTO) {
 		return employeeService.add(employeeDTO);
 	}
 
 	@PutMapping("/update")
-	public Employee update(@RequestBody final EmployeeRequestDTO employeeDTO) {
+	public EmployeeResponseDTO update(@RequestBody final EmployeeRequestDTO employeeDTO) {
 		return employeeService.update(employeeDTO);
 	}
 

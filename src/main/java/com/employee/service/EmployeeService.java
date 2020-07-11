@@ -3,16 +3,16 @@ package com.employee.service;
 import java.util.List;
 
 import com.employee.dto.EmployeeRequestDTO;
-import com.employee.model.Employee;
+import com.employee.dto.EmployeeResponseDTO;
 
 public interface EmployeeService {
-	public List<Employee> getAll();
+	public List<EmployeeResponseDTO> getAll();
 
-	public Employee get(final Integer id);
+	public EmployeeResponseDTO get(final Integer id);
 
-	public Employee add(final EmployeeRequestDTO employee);
+	public EmployeeResponseDTO add(final EmployeeRequestDTO employee);
 
-	public Employee update(final EmployeeRequestDTO employee);
-	
+	public EmployeeResponseDTO update(final EmployeeRequestDTO employee);
+
 	public void delete(final Integer id);
 }

@@ -1,5 +1,7 @@
 package com.employee.service.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.employee.dto.EmployeeRequestDTO;
+import com.employee.dto.EmployeeResponseDTO;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
@@ -17,23 +20,70 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-	public List<Employee> getAll() {
-		return employeeRepository.findAll();
+	public List<EmployeeResponseDTO> getAll() {
+		List<Employee> employeeList = employeeRepository.findAll();
+		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
+		Iterator<Employee> i = employeeList.iterator();
+
+		while (i.hasNext()) {
+			Employee emp = i.next();
+			EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
+
+			// convert Employee to EmployeeResponseDTO
+			empResponse.setId(emp.getId());
+			empResponse.setName(emp.getName());
+			empResponse.setSalary(emp.getSalary());
+			empResponse.setTeamName(emp.getTeamName());
+
+			// put EmployeeResponseDTO object in employeeResponseList
+			employeeResponseList.add(empResponse);
+		}
+
+		return employeeResponseList;
 	}
 
-	public Employee get(final Integer id) {
+	public EmployeeResponseDTO get(final Integer id) {
 		Optional<Employee> optional = employeeRepository.findById(id);
-		return optional.get();
+		Employee emp = optional.get();
+		EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
+
+		// convert Employee to EmployeeResponseDTO
+		empResponse.setId(emp.getId());
+		empResponse.setName(emp.getName());
+		empResponse.setSalary(emp.getSalary());
+		empResponse.setTeamName(emp.getTeamName());
+
+		return empResponse;
 	}
 
-	public Employee add(final EmployeeRequestDTO employeeDTO) {
+	public EmployeeResponseDTO add(final EmployeeRequestDTO employeeDTO) {
 		Employee employee = prepareEmployee(employeeDTO);
-		return employeeRepository.save(employee);
+		// employee added and response received in emp
+		Employee emp = employeeRepository.save(employee);
+		EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
+
+		// convert Employee to EmployeeResponseDTO
+		empResponse.setId(emp.getId());
+		empResponse.setName(emp.getName());
+		empResponse.setSalary(emp.getSalary());
+		empResponse.setTeamName(emp.getTeamName());
+
+		return empResponse;
 	}
 
-	public Employee update(final EmployeeRequestDTO employeeDTO) {
+	public EmployeeResponseDTO update(final EmployeeRequestDTO employeeDTO) {
 		Employee employee = prepareEmployee(employeeDTO);
-		return employeeRepository.save(employee);
+		// employee updated and response received in emp
+		Employee emp = employeeRepository.save(employee);
+		EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
+
+		// convert Employee to EmployeeResponseDTO
+		empResponse.setId(emp.getId());
+		empResponse.setName(emp.getName());
+		empResponse.setSalary(emp.getSalary());
+		empResponse.setTeamName(emp.getTeamName());
+
+		return empResponse;
 	}
 
 	private Employee prepareEmployee(final EmployeeRequestDTO employeeDTO) {

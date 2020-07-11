@@ -1,7 +1,6 @@
 package com.employee.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,39 +13,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.model.Employee;
-import com.employee.repository.EmployeeRepository;
+import com.employee.service.EmployeeService;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private EmployeeService employeeService;
 
 	@GetMapping("/all")
 	public List<Employee> getAll() {
-		return employeeRepository.findAll();
+		return employeeService.getAll();
 	}
 
 	@GetMapping("/{id}")
 	public Employee get(@PathVariable final Integer id) {
-		Optional<Employee> optional = employeeRepository.findById(id);
-		return optional.get();
+		return employeeService.get(id);
 	}
 
 	@PostMapping("/add")
 	public Employee add(@RequestBody final Employee employee) {
-		return employeeRepository.save(employee);
+		return employeeService.add(employee);
 	}
 
 	@PutMapping("/update")
 	public Employee update(@RequestBody final Employee employee) {
-		return employeeRepository.save(employee);
+		return employeeService.update(employee);
 	}
 
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable final Integer id) {
-		employeeRepository.deleteById(id);
+		employeeService.delete(id);
 	}
 
 }

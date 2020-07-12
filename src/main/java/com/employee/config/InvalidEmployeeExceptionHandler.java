@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.employee.exception.InvalidEmployeeException;
+import com.employee.exception.InvalidEmployeeIDException;
 
 @ControllerAdvice
 public class InvalidEmployeeExceptionHandler {
-	@ExceptionHandler(value = InvalidEmployeeException.class)
+	@ExceptionHandler(value = InvalidEmployeeIDException.class)
 	public @ResponseBody String handleInvalidEmployeeException() {
 		return "Employee does not exist!";
 	}

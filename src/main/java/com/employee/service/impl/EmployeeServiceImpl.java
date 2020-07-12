@@ -14,6 +14,8 @@ import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.exception.InvalidEmployeeIDException;
 import com.employee.exception.InvalidEmployeeNameException;
+import com.employee.exception.InvalidEmployeeSalaryException;
+import com.employee.exception.InvalidEmployeeTeamNameException;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
@@ -57,6 +59,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		// validations
 		validateName(employeeDTO.getName());
+		validateTeamName(employeeDTO.getTeamName());
+		validateSalary(employeeDTO.getSalary());
 
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee added and response received in emp
@@ -72,6 +76,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// validations
 		validateID(employeeDTO.getId());
 		validateName(employeeDTO.getName());
+		validateTeamName(employeeDTO.getTeamName());
+		validateSalary(employeeDTO.getSalary());
 
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee updated and response received in emp
@@ -123,6 +129,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private void validateName(final String name) {
 		if (name.trim().isEmpty())
 			throw new InvalidEmployeeNameException();
+	}
+
+	private void validateTeamName(final String name) {
+		if (name.trim().isEmpty())
+			throw new InvalidEmployeeTeamNameException();
+	}
+
+	private void validateSalary(final Integer salary) {
+		if (salary == null)
+			throw new InvalidEmployeeSalaryException();
 	}
 
 }

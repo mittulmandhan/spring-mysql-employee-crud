@@ -2,7 +2,10 @@ package com.employee.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +20,7 @@ import com.employee.dto.EmployeeResponseDTO;
 import com.employee.service.EmployeeService;
 
 @RestController
+@Validated
 @RequestMapping("/employee")
 public class EmployeeController {
 
@@ -34,12 +38,12 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/add")
-	public EmployeeResponseDTO add(@RequestBody final EmployeeRequestDTO employeeDTO) {
+	public EmployeeResponseDTO add(@Valid @RequestBody final EmployeeRequestDTO employeeDTO) {
 		return employeeService.add(employeeDTO);
 	}
 
 	@PutMapping("/update")
-	public EmployeeResponseDTO update(@RequestBody final EmployeeRequestDTO employeeDTO) {
+	public EmployeeResponseDTO update(@Valid @RequestBody final EmployeeRequestDTO employeeDTO) {
 		return employeeService.update(employeeDTO);
 	}
 

@@ -20,10 +20,10 @@ public class Employee extends Auditable {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "name")
+	@Column(name = "name", length = 50)
 	private String name;
 
-	@Column(name = "team_name")
+	@Column(name = "team_name", length = 50)
 	private String teamName;
 
 	@Column(name = "salary")

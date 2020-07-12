@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
+import com.employee.exception.InvalidEmployeeException;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
@@ -56,6 +57,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public EmployeeResponseDTO update(final EmployeeRequestDTO employeeDTO) {
+
+		if (employeeDTO.getId() == null)
+			throw new InvalidEmployeeException("Employee Id Invalid! " + employeeDTO.getId());
+		else if (employeeRepository.getOne(employeeDTO.getId()) == null)
+			throw new InvalidEmployeeException("Employee does not exist! " + employeeDTO.getId());
+
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee updated and response received in emp
 		Employee emp = employeeRepository.save(employee);
@@ -84,8 +91,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private Employee prepareEmployee(final EmployeeRequestDTO employeeDTO) {
 		Employee employee = new Employee();
-		if (employeeDTO.getId() != null)
-			employee.setId(employeeDTO.getId());
+
+		employee.setId(employeeDTO.getId());
 		employee.setName(employeeDTO.getName());
 		employee.setSalary(employeeDTO.getSalary());
 		employee.setTeamName(employeeDTO.getTeamName());

@@ -1,5 +1,7 @@
 package com.employee.dto;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +15,9 @@ public class EmployeeRequestDTO {
 	private String teamName;
 
 	private Integer salary;
+	
+	private Date createdAt;
+	
+	private Date lastUpdatedAt;
 
 }

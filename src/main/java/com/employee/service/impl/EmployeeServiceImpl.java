@@ -77,6 +77,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		empResponse.setName(emp.getName());
 		empResponse.setSalary(emp.getSalary());
 		empResponse.setTeamName(emp.getTeamName());
+		empResponse.setCreatedAt(emp.getCreatedAt());
+		empResponse.setLastUpdatedAt(emp.getLastUpdatedAt());
 		return empResponse;
 	}
 

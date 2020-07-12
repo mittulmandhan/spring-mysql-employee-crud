@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public EmployeeResponseDTO get(final Integer id) {
+
+		validateID(id);
+
 		Optional<Employee> optional = employeeRepository.findById(id);
 		Employee emp = optional.get();
 
@@ -58,10 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public EmployeeResponseDTO update(final EmployeeRequestDTO employeeDTO) {
 
-		if (employeeDTO.getId() == null)
-			throw new InvalidEmployeeIDException("Employee Id Invalid! " + employeeDTO.getId());
-		else if (employeeRepository.getOne(employeeDTO.getId()) == null)
-			throw new InvalidEmployeeIDException("Employee does not exist! " + employeeDTO.getId());
+		validateID(employeeDTO.getId());
 
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee updated and response received in emp
@@ -73,6 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public void delete(final Integer id) {
+		validateID(id);
 		employeeRepository.deleteById(id);
 	}
 
@@ -97,6 +100,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setSalary(employeeDTO.getSalary());
 		employee.setTeamName(employeeDTO.getTeamName());
 		return employee;
+	}
+
+	private void validateID(final Integer id) {
+		if (id == null)
+			throw new InvalidEmployeeIDException();
+		else if (!employeeRepository.existsById(id))
+			throw new EntityNotFoundException();
 	}
 
 }

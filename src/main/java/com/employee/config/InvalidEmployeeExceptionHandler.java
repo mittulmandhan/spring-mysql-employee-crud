@@ -12,12 +12,12 @@ import com.employee.exception.InvalidEmployeeIDException;
 public class InvalidEmployeeExceptionHandler {
 	@ExceptionHandler(value = InvalidEmployeeIDException.class)
 	public @ResponseBody String handleInvalidEmployeeException() {
-		return "Employee does not exist!";
+		return "Employee ID Invalid!";
 	}
 
 	@ExceptionHandler(value = EntityNotFoundException.class)
 	public @ResponseBody String handleEntityNotFoundException() {
-		return "Employee does not exist!!!!";
+		return "Employee does not exist!";
 	}
 
 }

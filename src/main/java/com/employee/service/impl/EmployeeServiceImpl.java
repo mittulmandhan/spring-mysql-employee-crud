@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.exception.InvalidEmployeeIDException;
+import com.employee.exception.InvalidEmployeeNameException;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
@@ -41,6 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public EmployeeResponseDTO get(final Integer id) {
 
+		// validations
 		validateID(id);
 
 		Optional<Employee> optional = employeeRepository.findById(id);
@@ -52,6 +54,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public EmployeeResponseDTO add(final EmployeeRequestDTO employeeDTO) {
+
+		// validations
+		validateName(employeeDTO.getName());
+
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee added and response received in emp
 		Employee emp = employeeRepository.save(employee);
@@ -63,7 +69,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public EmployeeResponseDTO update(final EmployeeRequestDTO employeeDTO) {
 
+		// validations
 		validateID(employeeDTO.getId());
+		validateName(employeeDTO.getName());
 
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee updated and response received in emp
@@ -75,7 +83,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public void delete(final Integer id) {
+
+		// validations
 		validateID(id);
+
 		employeeRepository.deleteById(id);
 	}
 
@@ -107,6 +118,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new InvalidEmployeeIDException();
 		else if (!employeeRepository.existsById(id))
 			throw new EntityNotFoundException();
+	}
+
+	private void validateName(final String name) {
+		if (name.trim().isEmpty())
+			throw new InvalidEmployeeNameException();
 	}
 
 }

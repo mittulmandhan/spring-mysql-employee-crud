@@ -1,15 +1,19 @@
 package com.employee.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.EntityNotFoundException;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.employee.exception.InvalidEmployeeIDException;
-import com.employee.exception.InvalidEmployeeNameException;
-import com.employee.exception.InvalidEmployeeSalaryException;
-import com.employee.exception.InvalidEmployeeTeamNameException;
 
 @ControllerAdvice
 public class InvalidEmployeeExceptionHandler {
@@ -23,19 +27,16 @@ public class InvalidEmployeeExceptionHandler {
 		return "Employee Does Not Exist!";
 	}
 
-	@ExceptionHandler(value = InvalidEmployeeNameException.class)
-	public @ResponseBody String handleInvalidEmployeeNameException() {
-		return "Invalid Employee Name!";
-	}
-
-	@ExceptionHandler(value = InvalidEmployeeTeamNameException.class)
-	public @ResponseBody String handleInvalidEmployeeTeamNameException() {
-		return "Invalid Employee Team Name!";
-	}
-
-	@ExceptionHandler(value = InvalidEmployeeSalaryException.class)
-	public @ResponseBody String handleInvalidEmployeeSalaryException() {
-		return "Invalid Employee Salary!";
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public @ResponseBody Map<String, String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+		Map<String, String> errors = new HashMap<>();
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errors.put(fieldName, errorMessage);
+		});
+		return errors;
 	}
 
 }

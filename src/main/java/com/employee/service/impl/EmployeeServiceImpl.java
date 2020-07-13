@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.exception.InvalidEmployeeIDException;
-import com.employee.exception.InvalidEmployeeNameException;
-import com.employee.exception.InvalidEmployeeSalaryException;
-import com.employee.exception.InvalidEmployeeTeamNameException;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
@@ -57,11 +54,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public EmployeeResponseDTO add(final EmployeeRequestDTO employeeDTO) {
 
-		// validations
-		validateName(employeeDTO.getName());
-		validateTeamName(employeeDTO.getTeamName());
-		validateSalary(employeeDTO.getSalary());
-
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee added and response received in emp
 		Employee emp = employeeRepository.save(employee);
@@ -75,9 +67,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		// validations
 		validateID(employeeDTO.getId());
-		validateName(employeeDTO.getName());
-		validateTeamName(employeeDTO.getTeamName());
-		validateSalary(employeeDTO.getSalary());
 
 		Employee employee = prepareEmployee(employeeDTO);
 		// employee updated and response received in emp
@@ -124,21 +113,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			throw new InvalidEmployeeIDException();
 		else if (!employeeRepository.existsById(id))
 			throw new EntityNotFoundException();
-	}
-
-	private void validateName(final String name) {
-		if (name.trim().isEmpty())
-			throw new InvalidEmployeeNameException();
-	}
-
-	private void validateTeamName(final String name) {
-		if (name.trim().isEmpty())
-			throw new InvalidEmployeeTeamNameException();
-	}
-
-	private void validateSalary(final Integer salary) {
-		if (salary == null)
-			throw new InvalidEmployeeSalaryException();
 	}
 
 }

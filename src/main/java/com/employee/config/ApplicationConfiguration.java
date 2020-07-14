@@ -7,8 +7,10 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:application.properties")
 public class ApplicationConfiguration {
-
-	@Value("${pawan.mittul}")
+	
+	// if the given property is not found then
+	// the default value 'red' will be printed
+	@Value("${pawan.mitt:red}")
 	public String pawanMittul;
 
 }

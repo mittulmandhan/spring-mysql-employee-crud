@@ -24,4 +24,13 @@ public class EmployeeResponseDTO {
 
 	private Date lastUpdatedAt;
 
+	public boolean equals(EmployeeResponseDTO obj) {
+		boolean flag = false;
+		if (obj.getName().equalsIgnoreCase(this.getName()) && obj.getTeamName().equalsIgnoreCase(this.getTeamName())
+				&& obj.getSalary().equals(this.getSalary())) {
+			flag = true;
+		}
+		return flag;
+	}
+
 }

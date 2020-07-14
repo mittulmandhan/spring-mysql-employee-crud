@@ -32,7 +32,7 @@ public class EmployeeController {
 	@GetMapping("/all")
 	public List<EmployeeResponseDTO> getAll() {
 		// acessing the property file
-		System.out.println(appConfig.pawanMittulProperty());
+		System.out.println(appConfig.pawanMittul);
 		return employeeService.getAll();
 	}
 

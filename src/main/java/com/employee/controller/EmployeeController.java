@@ -19,13 +19,13 @@ import com.employee.dto.EmployeeResponseDTO;
 import com.employee.service.EmployeeService;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
 
-	@GetMapping("/all")
+	@GetMapping
 	public List<EmployeeResponseDTO> getAll() {
 		return employeeService.getAll();
 	}
@@ -35,12 +35,12 @@ public class EmployeeController {
 		return employeeService.get(id);
 	}
 
-	@PostMapping("/add")
+	@PostMapping
 	public EmployeeResponseDTO add(@Valid @RequestBody final EmployeeRequestDTO employeeDTO) {
 		return employeeService.add(employeeDTO);
 	}
 
-	@PutMapping("/update")
+	@PutMapping
 	public EmployeeResponseDTO update(@Valid @RequestBody final EmployeeRequestDTO employeeDTO) {
 		return employeeService.update(employeeDTO);
 	}

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.employee.config.ApplicationConfiguration;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.service.EmployeeService;
@@ -24,9 +25,14 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
-
+	
+	@Autowired
+	ApplicationConfiguration appConfig;
+	
 	@GetMapping("/all")
 	public List<EmployeeResponseDTO> getAll() {
+		// acessing the property file
+		System.out.println(appConfig.pawanMittulProperty());
 		return employeeService.getAll();
 	}
 

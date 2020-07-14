@@ -19,6 +19,6 @@ public class JpaAuditingConfiguration {
 		 * with following code segment.
 		 * SecurityContextHolder.getContext().getAuthentication().getName()
 		 */
-		return () -> Optional.ofNullable("chathuranga");
+		return () -> Optional.ofNullable("null");
 	}
 }

@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public EmployeeResponseDTO add(final EmployeeRequestDTO employeeDTO) {
 
-		Employee employee = prepareEmployee(employeeDTO);
+		Employee employee = prepareEmployeeForAdd(employeeDTO);
 		// employee added and response received in emp
 		Employee emp = employeeRepository.save(employee);
 
@@ -68,7 +68,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// validations
 		validateID(employeeDTO.getId());
 
-		Employee employee = prepareEmployee(employeeDTO);
+		Employee employee = prepareEmployeeForUpdate(employeeDTO);
 		// employee updated and response received in emp
 		Employee emp = employeeRepository.save(employee);
 
@@ -98,7 +98,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return empResponse;
 	}
 
-	private Employee prepareEmployee(final EmployeeRequestDTO employeeDTO) {
+	private Employee prepareEmployeeForAdd(final EmployeeRequestDTO employeeDTO) {
+		Employee employee = new Employee();
+
+		employee.setName(employeeDTO.getName());
+		employee.setSalary(employeeDTO.getSalary());
+		employee.setTeamName(employeeDTO.getTeamName());
+		return employee;
+	}
+
+	private Employee prepareEmployeeForUpdate(EmployeeRequestDTO employeeDTO) {
 		Employee employee = new Employee();
 
 		employee.setId(employeeDTO.getId());

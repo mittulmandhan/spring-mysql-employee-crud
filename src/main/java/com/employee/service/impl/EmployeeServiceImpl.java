@@ -10,6 +10,8 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.employee.dto.EmployeeRegisterationRequestDTO;
+import com.employee.dto.EmployeeRegisterationResponseDTO;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.exception.InvalidEmployeeIDException;
@@ -52,29 +54,40 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return empResponse;
 	}
 
-	public EmployeeResponseDTO add(final EmployeeRequestDTO employeeDTO) {
+	public EmployeeResponseDTO add(final EmployeeRequestDTO employeeRequest) {
 
-		Employee employee = prepareEmployeeForAdd(employeeDTO);
+		Employee employee = prepareEmployeeForAdd(employeeRequest);
 		// employee added and response received in emp
 		Employee emp = employeeRepository.save(employee);
 
-		EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
+		EmployeeResponseDTO employeeResponse = prepareEmployeeResponseDTO(emp);
 
-		return empResponse;
+		return employeeResponse;
 	}
 
-	public EmployeeResponseDTO update(final EmployeeRequestDTO employeeDTO) {
+	public EmployeeRegisterationResponseDTO employeeRegisteration(final EmployeeRegisterationRequestDTO employeeRegisterRequest) {
+		Employee employee = prepareEmployeeForRegisteration(employeeRegisterRequest);
+
+		// employee saved in db and received response in emp
+		Employee emp = employeeRepository.save(employee);
+
+		EmployeeRegisterationResponseDTO employeeRegisterResponse = prepareEmployeeResponseForRegisteration(emp);
+		
+		return employeeRegisterResponse;
+	}
+
+	public EmployeeResponseDTO update(final EmployeeRequestDTO employeeRequest) {
 
 		// validations
-		validateID(employeeDTO.getId());
+		validateID(employeeRequest.getId());
 
-		Employee employee = prepareEmployeeForUpdate(employeeDTO);
+		Employee employee = prepareEmployeeForUpdate(employeeRequest);
 		// employee updated and response received in emp
 		Employee emp = employeeRepository.save(employee);
 
-		EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
+		EmployeeResponseDTO employeeResponse = prepareEmployeeResponseDTO(emp);
 
-		return empResponse;
+		return employeeResponse;
 	}
 
 	public void delete(final Integer id) {
@@ -85,35 +98,59 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeeRepository.deleteById(id);
 	}
 
-	private EmployeeResponseDTO prepareEmployeeResponseDTO(Employee emp) {
-		EmployeeResponseDTO empResponse = new EmployeeResponseDTO();
+	private EmployeeResponseDTO prepareEmployeeResponseDTO(Employee employee) {
+		EmployeeResponseDTO employeeResponse = new EmployeeResponseDTO();
 
 		// convert Employee to EmployeeResponseDTO
-		empResponse.setId(emp.getId());
-		empResponse.setName(emp.getName());
-		empResponse.setSalary(emp.getSalary());
-		empResponse.setTeamName(emp.getTeamName());
-		empResponse.setCreatedAt(emp.getCreatedAt());
-		empResponse.setLastUpdatedAt(emp.getLastUpdatedAt());
-		return empResponse;
+		employeeResponse.setId(employee.getId());
+		employeeResponse.setEmail(employee.getEmail());
+		employeeResponse.setName(employee.getName());
+		employeeResponse.setSalary(employee.getSalary());
+		employeeResponse.setTeamName(employee.getTeamName());
+		employeeResponse.setCreatedAt(employee.getCreatedAt());
+		employeeResponse.setLastUpdatedAt(employee.getLastUpdatedAt());
+		return employeeResponse;
 	}
 
-	private Employee prepareEmployeeForAdd(final EmployeeRequestDTO employeeDTO) {
+	private EmployeeRegisterationResponseDTO prepareEmployeeResponseForRegisteration(Employee employee) {
+		EmployeeRegisterationResponseDTO employeeRegisterResponse = new EmployeeRegisterationResponseDTO();
+
+		employeeRegisterResponse.setId(employee.getId());
+		employeeRegisterResponse.setName(employee.getName());
+		employeeRegisterResponse.setEmail(employee.getEmail());
+		employeeRegisterResponse.setTeamName(employee.getTeamName());
+		employeeRegisterResponse.setCreatedAt(employee.getCreatedAt());
+
+		return employeeRegisterResponse;
+	}
+
+	private Employee prepareEmployeeForAdd(final EmployeeRequestDTO employeeRequest) {
 		Employee employee = new Employee();
 
-		employee.setName(employeeDTO.getName());
-		employee.setSalary(employeeDTO.getSalary());
-		employee.setTeamName(employeeDTO.getTeamName());
+		employee.setEmail(employeeRequest.getEmail());
+		employee.setName(employeeRequest.getName());
+		employee.setSalary(employeeRequest.getSalary());
+		employee.setTeamName(employeeRequest.getTeamName());
 		return employee;
 	}
 
-	private Employee prepareEmployeeForUpdate(EmployeeRequestDTO employeeDTO) {
+	private Employee prepareEmployeeForRegisteration(EmployeeRegisterationRequestDTO employeeRegisterRequest) {
 		Employee employee = new Employee();
 
-		employee.setId(employeeDTO.getId());
-		employee.setName(employeeDTO.getName());
-		employee.setSalary(employeeDTO.getSalary());
-		employee.setTeamName(employeeDTO.getTeamName());
+		employee.setEmail(employeeRegisterRequest.getEmail().toLowerCase());
+		employee.setName(employeeRegisterRequest.getFirstName().trim().toLowerCase() + " " + employeeRegisterRequest.getLastName().trim().toLowerCase());
+		employee.setTeamName(employeeRegisterRequest.getTeamName().toLowerCase());
+		employee.setPassword(employeeRegisterRequest.getPassword());
+		return employee;
+	}
+
+	private Employee prepareEmployeeForUpdate(EmployeeRequestDTO employeeRequest) {
+		Employee employee = new Employee();
+
+		employee.setId(employeeRequest.getId());
+		employee.setName(employeeRequest.getName());
+		employee.setSalary(employeeRequest.getSalary());
+		employee.setTeamName(employeeRequest.getTeamName());
 		return employee;
 	}
 

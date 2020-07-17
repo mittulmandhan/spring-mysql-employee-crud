@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.employee.dto.EmployeeRegisterationRequestDTO;
+import com.employee.dto.EmployeeRegisterationResponseDTO;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.service.EmployeeService;
@@ -38,6 +40,11 @@ public class EmployeeController {
 	@PostMapping
 	public EmployeeResponseDTO add(@Valid @RequestBody final EmployeeRequestDTO employeeDTO) {
 		return employeeService.add(employeeDTO);
+	}
+
+	@PostMapping("/registeration")
+	public EmployeeRegisterationResponseDTO employeeRegisteration(@Valid @RequestBody final EmployeeRegisterationRequestDTO employeeRegisterDTO) {
+		return employeeService.employeeRegisteration(employeeRegisterDTO);
 	}
 
 	@PutMapping

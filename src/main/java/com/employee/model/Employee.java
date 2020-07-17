@@ -20,6 +20,9 @@ public class Employee extends Auditable {
 	@Column(name = "id")
 	private Integer id;
 
+	@Column(name = "email")
+	private String email;
+
 	@Column(name = "name", length = 50)
 	private String name;
 
@@ -28,5 +31,8 @@ public class Employee extends Auditable {
 
 	@Column(name = "salary")
 	private Integer salary;
+
+	@Column(name = "password")
+	private String password;
 
 }

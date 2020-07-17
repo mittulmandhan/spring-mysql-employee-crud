@@ -13,6 +13,8 @@ import lombok.Setter;
 @JsonInclude(Include.NON_NULL)
 public class EmployeeResponseDTO {
 	private Integer id;
+	
+	private String email;
 
 	private String name;
 

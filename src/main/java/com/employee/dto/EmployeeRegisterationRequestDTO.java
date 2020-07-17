@@ -1,5 +1,6 @@
 package com.employee.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 public class EmployeeRegisterationRequestDTO {
 
+	@Email(regexp = ".+@.+\\..+", message = "please provide a valid email address")
 	@NotBlank(message = "email cannot be blank")
 	private String email;
 

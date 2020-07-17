@@ -1,4 +1,4 @@
-package com.employee.config;
+package com.employee.exceptionhandler;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -72,7 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee emp = employeeRepository.save(employee);
 
 		EmployeeRegisterationResponseDTO employeeRegisterResponse = prepareEmployeeResponseForRegisteration(emp);
-		
+
 		return employeeRegisterResponse;
 	}
 
@@ -138,7 +138,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = new Employee();
 
 		employee.setEmail(employeeRegisterRequest.getEmail().toLowerCase());
-		employee.setName(employeeRegisterRequest.getFirstName().trim().toLowerCase() + " " + employeeRegisterRequest.getLastName().trim().toLowerCase());
+		employee.setName(employeeRegisterRequest.getFirstName().trim().toLowerCase() + " "
+				+ employeeRegisterRequest.getLastName().trim().toLowerCase());
 		employee.setTeamName(employeeRegisterRequest.getTeamName().toLowerCase());
 		employee.setPassword(employeeRegisterRequest.getPassword());
 		return employee;

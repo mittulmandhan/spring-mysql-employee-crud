@@ -7,6 +7,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,9 +33,18 @@ public class InvalidEmployeeExceptionHandler {
 	public @ResponseBody Map<String, String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 		Map<String, String> errors = new HashMap<>();
 		ex.getBindingResult().getAllErrors().forEach((error) -> {
-			String fieldName = ((FieldError) error).getField();
+			String fieldOrObjectName;
+			try {
+				// if error is field level
+				// such as null name, blank email, salary is not a +ve integer, etc.
+				fieldOrObjectName = ((FieldError) error).getField();
+			} catch (ClassCastException e) {
+				// if error is object level
+				// such as password does not match with confirmPassword, etc.
+				fieldOrObjectName = ((ObjectError) error).getObjectName();
+			}
 			String errorMessage = error.getDefaultMessage();
-			errors.put(fieldName, errorMessage);
+			errors.put(fieldOrObjectName, errorMessage);
 		});
 		return errors;
 	}

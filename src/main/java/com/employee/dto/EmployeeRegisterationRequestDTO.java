@@ -3,11 +3,14 @@ package com.employee.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.employee.annotation.PasswordMatches;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@PasswordMatches
 public class EmployeeRegisterationRequestDTO {
 
 	@Email(regexp = ".+@.+\\..+", message = "please provide a valid email address")

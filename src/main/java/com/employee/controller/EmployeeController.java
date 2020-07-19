@@ -20,6 +20,9 @@ import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.service.EmployeeService;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -29,31 +32,43 @@ public class EmployeeController {
 
 	@GetMapping
 	public List<EmployeeResponseDTO> getAll() {
-		return employeeService.getAll();
+		List<EmployeeResponseDTO> employeeList = employeeService.getAll();
+		log.info("All emplyees fetched -> " + employeeList);
+		return employeeList;
 	}
 
 	@GetMapping("/{id}")
 	public EmployeeResponseDTO get(@PathVariable final Integer id) {
-		return employeeService.get(id);
+		EmployeeResponseDTO employee = employeeService.get(id);
+		log.info("Employee fetched -> " + employee);
+		return employee;
 	}
 
 	@PostMapping
 	public EmployeeResponseDTO add(@Valid @RequestBody final EmployeeRequestDTO employeeDTO) {
-		return employeeService.add(employeeDTO);
+		EmployeeResponseDTO employee = employeeService.add(employeeDTO);
+		log.info("Employee added -> " + employee);
+		return employee;
 	}
 
 	@PostMapping("/registeration")
-	public EmployeeRegisterationResponseDTO employeeRegisteration(@Valid @RequestBody final EmployeeRegisterationRequestDTO employeeRegisterDTO) {
-		return employeeService.employeeRegisteration(employeeRegisterDTO);
+	public EmployeeRegisterationResponseDTO employeeRegisteration(
+			@Valid @RequestBody final EmployeeRegisterationRequestDTO employeeRegisterDTO) {
+		EmployeeRegisterationResponseDTO employee = employeeService.employeeRegisteration(employeeRegisterDTO);
+		log.info("Employee registered -> " + employee);
+		return employee;
 	}
 
 	@PutMapping
 	public EmployeeResponseDTO update(@Valid @RequestBody final EmployeeRequestDTO employeeDTO) {
-		return employeeService.update(employeeDTO);
+		EmployeeResponseDTO employee = employeeService.update(employeeDTO);
+		log.info("Employee updated -> " + employee);
+		return employee;
 	}
 
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable final Integer id) {
+		log.info("Employee deleted -> " + id);
 		employeeService.delete(id);
 	}
 

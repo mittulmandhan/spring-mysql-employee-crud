@@ -1,5 +1,6 @@
 package com.employee.controller;
 
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 
 @RestController
 @Log4j2
+@PropertySource("classpath:application.properties")
 public class LoggingController {
 
 	@RequestMapping("/")

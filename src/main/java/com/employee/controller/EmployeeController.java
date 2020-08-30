@@ -36,6 +36,13 @@ public class EmployeeController {
 		log.info("All emplyees fetched -> " + employeeList);
 		return employeeList;
 	}
+	
+	@GetMapping("/paged")
+	public List<EmployeeResponseDTO> getPaged() {
+		List<EmployeeResponseDTO> employeeList = employeeService.getPaged();
+		log.info("All emplyees fetched -> " + employeeList);
+		return employeeList;
+	}
 
 	@GetMapping("/{id}")
 	public EmployeeResponseDTO get(@PathVariable final Integer id) {

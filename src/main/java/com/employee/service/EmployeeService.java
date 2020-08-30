@@ -9,6 +9,8 @@ import com.employee.dto.EmployeeResponseDTO;
 
 public interface EmployeeService {
 	public List<EmployeeResponseDTO> getAll();
+	
+	public List<EmployeeResponseDTO> getPaged();
 
 	public EmployeeResponseDTO get(final Integer id);
 

@@ -8,6 +8,9 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.employee.dto.EmployeeRegistrationRequestDTO;
@@ -27,6 +30,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public List<EmployeeResponseDTO> getAll() {
 		List<Employee> employeeList = employeeRepository.findAll();
+		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
+		Iterator<Employee> i = employeeList.iterator();
+
+		while (i.hasNext()) {
+			Employee emp = i.next();
+			EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
+
+			// put EmployeeResponseDTO object in employeeResponseList
+			employeeResponseList.add(empResponse);
+		}
+
+		return employeeResponseList;
+	}
+	
+	public List<EmployeeResponseDTO> getPaged() {
+		Pageable firstPageWithFiveElements = PageRequest.of(0, 5);
+		
+		Page<Employee> employeeList = employeeRepository.findAll(firstPageWithFiveElements);
 		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
 		Iterator<Employee> i = employeeList.iterator();
 

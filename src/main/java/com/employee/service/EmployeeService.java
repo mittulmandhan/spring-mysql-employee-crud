@@ -13,6 +13,8 @@ public interface EmployeeService {
 	public List<EmployeeResponseDTO> getPaged();
 	
 	public List<EmployeeResponseDTO> getSorted();
+	
+	public List<EmployeeResponseDTO> getPagedAndSorted();
 
 	public EmployeeResponseDTO get(final Integer id);
 

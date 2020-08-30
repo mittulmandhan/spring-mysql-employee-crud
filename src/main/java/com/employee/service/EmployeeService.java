@@ -2,8 +2,8 @@ package com.employee.service;
 
 import java.util.List;
 
-import com.employee.dto.EmployeeRegisterationRequestDTO;
-import com.employee.dto.EmployeeRegisterationResponseDTO;
+import com.employee.dto.EmployeeRegistrationRequestDTO;
+import com.employee.dto.EmployeeRegistrationResponseDTO;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 
@@ -14,7 +14,7 @@ public interface EmployeeService {
 
 	public EmployeeResponseDTO add(final EmployeeRequestDTO employee);
 	
-	public EmployeeRegisterationResponseDTO employeeRegisteration(final EmployeeRegisterationRequestDTO employeeRegisterRequest);
+	public EmployeeRegistrationResponseDTO employeeRegisteration(final EmployeeRegistrationRequestDTO employeeRegisterRequest);
 
 	public EmployeeResponseDTO update(final EmployeeRequestDTO employee);
 

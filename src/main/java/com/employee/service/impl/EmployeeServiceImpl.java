@@ -10,8 +10,8 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.employee.dto.EmployeeRegisterationRequestDTO;
-import com.employee.dto.EmployeeRegisterationResponseDTO;
+import com.employee.dto.EmployeeRegistrationRequestDTO;
+import com.employee.dto.EmployeeRegistrationResponseDTO;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.exception.InvalidEmployeeIDException;
@@ -65,13 +65,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeResponse;
 	}
 
-	public EmployeeRegisterationResponseDTO employeeRegisteration(final EmployeeRegisterationRequestDTO employeeRegisterRequest) {
+	public EmployeeRegistrationResponseDTO employeeRegisteration(final EmployeeRegistrationRequestDTO employeeRegisterRequest) {
 		Employee employee = prepareEmployeeForRegisteration(employeeRegisterRequest);
 
 		// employee saved in db and received response in emp
 		Employee emp = employeeRepository.save(employee);
 
-		EmployeeRegisterationResponseDTO employeeRegisterResponse = prepareEmployeeResponseForRegisteration(emp);
+		EmployeeRegistrationResponseDTO employeeRegisterResponse = prepareEmployeeResponseForRegisteration(emp);
 
 		return employeeRegisterResponse;
 	}
@@ -112,8 +112,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeResponse;
 	}
 
-	private EmployeeRegisterationResponseDTO prepareEmployeeResponseForRegisteration(Employee employee) {
-		EmployeeRegisterationResponseDTO employeeRegisterResponse = new EmployeeRegisterationResponseDTO();
+	private EmployeeRegistrationResponseDTO prepareEmployeeResponseForRegisteration(Employee employee) {
+		EmployeeRegistrationResponseDTO employeeRegisterResponse = new EmployeeRegistrationResponseDTO();
 
 		employeeRegisterResponse.setId(employee.getId());
 		employeeRegisterResponse.setName(employee.getName());
@@ -134,7 +134,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employee;
 	}
 
-	private Employee prepareEmployeeForRegisteration(EmployeeRegisterationRequestDTO employeeRegisterRequest) {
+	private Employee prepareEmployeeForRegisteration(EmployeeRegistrationRequestDTO employeeRegisterRequest) {
 		Employee employee = new Employee();
 
 		employee.setEmail(employeeRegisterRequest.getEmail().toLowerCase());

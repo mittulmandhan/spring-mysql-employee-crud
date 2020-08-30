@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @PasswordMatches
-public class EmployeeRegisterationRequestDTO {
+public class EmployeeRegistrationRequestDTO {
 
 	@Email(regexp = ".+@.+\\..+", message = "please provide a valid email address")
 	@NotBlank(message = "email cannot be blank")

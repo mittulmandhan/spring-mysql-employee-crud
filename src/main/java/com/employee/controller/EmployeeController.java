@@ -43,6 +43,13 @@ public class EmployeeController {
 		log.info("All emplyees fetched -> " + employeeList);
 		return employeeList;
 	}
+	
+	@GetMapping("/sorted")
+	public List<EmployeeResponseDTO> getSorted() {
+		List<EmployeeResponseDTO> employeeList = employeeService.getSorted();
+		log.info("All emplyees fetched -> " + employeeList);
+		return employeeList;
+	}
 
 	@GetMapping("/{id}")
 	public EmployeeResponseDTO get(@PathVariable final Integer id) {

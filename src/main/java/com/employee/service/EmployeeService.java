@@ -11,6 +11,8 @@ public interface EmployeeService {
 	public List<EmployeeResponseDTO> getAll();
 	
 	public List<EmployeeResponseDTO> getPaged();
+	
+	public List<EmployeeResponseDTO> getSorted();
 
 	public EmployeeResponseDTO get(final Integer id);
 

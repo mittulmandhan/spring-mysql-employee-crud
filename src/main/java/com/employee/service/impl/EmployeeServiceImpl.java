@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.employee.dto.EmployeeRegistrationRequestDTO;
@@ -50,6 +51,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Page<Employee> employeeList = employeeRepository.findAll(firstPageWithFiveElements);
 		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
 		Iterator<Employee> i = employeeList.iterator();
+
+		while (i.hasNext()) {
+			Employee emp = i.next();
+			EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
+
+			// put EmployeeResponseDTO object in employeeResponseList
+			employeeResponseList.add(empResponse);
+		}
+
+		return employeeResponseList;
+	}
+	
+	public List<EmployeeResponseDTO> getSorted() {
+		
+		List<Employee> sortedEmployeeList = employeeRepository.findAll(Sort.by("name"));
+		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
+		Iterator<Employee> i = sortedEmployeeList.iterator();
 
 		while (i.hasNext()) {
 			Employee emp = i.next();

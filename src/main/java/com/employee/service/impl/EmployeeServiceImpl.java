@@ -9,7 +9,6 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -45,20 +44,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeResponseList;
 	}
 
-	public List<EmployeeResponseDTO> getPaged(int pageNo, int pageSize) {
-		Page<Employee> pagedEmployee = employeeRepository.findAll(PageRequest.of(pageNo, pageSize));
-
-		List<Employee> empList = pagedEmployee.getContent();
-
-		return getEmployeeDTO(empList);
-	}
-
-	private List<EmployeeResponseDTO> getEmployeeDTO(List<Employee> empList) {
-		List<EmployeeResponseDTO> responseDTOs = new ArrayList<EmployeeResponseDTO>();
-		for (Employee emp : empList) {
-			responseDTOs.add(prepareEmployeeResponseDTO(emp));
-		}
-		return responseDTOs;
+	public Page<Employee> getPaged(Pageable pageable) {
+		return employeeRepository.findAll(pageable);
 	}
 
 	public List<EmployeeResponseDTO> getSorted() {
@@ -78,24 +65,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeResponseList;
 	}
 
-	public List<EmployeeResponseDTO> getPagedAndSorted() {
-		// Pageable firstPageWithTenElements = PageRequest.of(0, 10, Sort.by("name"));
-		Pageable firstPageWithTenElements = PageRequest.of(0, 10,
-				Sort.by("salary").descending().and(Sort.by("name").ascending()));
-
-		Page<Employee> employeeList = employeeRepository.findAll(firstPageWithTenElements);
-		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
-		Iterator<Employee> i = employeeList.iterator();
-
-		while (i.hasNext()) {
-			Employee emp = i.next();
-			EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
-
-			// put EmployeeResponseDTO object in employeeResponseList
-			employeeResponseList.add(empResponse);
-		}
-
-		return employeeResponseList;
+	public Page<Employee> getPagedAndSorted(Pageable pageable) {
+		return employeeRepository.findAll(pageable);
 	}
 
 	public EmployeeResponseDTO get(final Integer id) {

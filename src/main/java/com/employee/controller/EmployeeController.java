@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,13 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.dto.EmployeeRegistrationRequestDTO;
 import com.employee.dto.EmployeeRegistrationResponseDTO;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
+import com.employee.model.Employee;
 import com.employee.service.EmployeeService;
 
 import lombok.extern.log4j.Log4j2;
@@ -39,8 +41,8 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/paged")
-	public List<EmployeeResponseDTO> getPaged(@RequestParam(defaultValue = "0") int pageNo,@RequestParam(defaultValue = "10") int pageSize) {
-		List<EmployeeResponseDTO> employeeList = employeeService.getPaged(pageNo,pageSize);
+	public Page<Employee> getPaged(Pageable pageable) {
+		Page<Employee> employeeList = employeeService.getPaged(pageable);
 		log.info("All emplyees fetched -> " + employeeList);
 		return employeeList;
 	}
@@ -53,8 +55,8 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/pagedandsorted")
-	public List<EmployeeResponseDTO> getPagedAndSorted() {
-		List<EmployeeResponseDTO> employeeList = employeeService.getPagedAndSorted();
+	public Page<Employee> getPagedAndSorted(Pageable pageable) {
+		Page<Employee> employeeList = employeeService.getPagedAndSorted(pageable);
 		log.info("All emplyees fetched -> " + employeeList);
 		return employeeList;
 	}

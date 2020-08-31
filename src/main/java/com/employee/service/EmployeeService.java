@@ -2,19 +2,23 @@ package com.employee.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.employee.dto.EmployeeRegistrationRequestDTO;
 import com.employee.dto.EmployeeRegistrationResponseDTO;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
+import com.employee.model.Employee;
 
 public interface EmployeeService {
 	public List<EmployeeResponseDTO> getAll();
 	
-	public List<EmployeeResponseDTO> getPaged(int pageNo,int pageSize);
+	public Page<Employee> getPaged(Pageable pageable);
 	
 	public List<EmployeeResponseDTO> getSorted();
 	
-	public List<EmployeeResponseDTO> getPagedAndSorted();
+	public Page<Employee> getPagedAndSorted(Pageable pageable);
 
 	public EmployeeResponseDTO get(final Integer id);
 

@@ -44,27 +44,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		return employeeResponseList;
 	}
-	
-	public List<EmployeeResponseDTO> getPaged(int pageNo,int pageSize) {
-		Pageable firstPageWithFiveElements = PageRequest.of(pageNo, pageSize);
-		
-		Page<Employee> employeeList = employeeRepository.findAll(firstPageWithFiveElements);
-		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
-		Iterator<Employee> i = employeeList.iterator();
 
-		while (i.hasNext()) {
-			Employee emp = i.next();
-			EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
+	public List<EmployeeResponseDTO> getPaged(int pageNo, int pageSize) {
+		Page<Employee> pagedEmployee = employeeRepository.findAll(PageRequest.of(pageNo, pageSize));
 
-			// put EmployeeResponseDTO object in employeeResponseList
-			employeeResponseList.add(empResponse);
-		}
+		List<Employee> empList = pagedEmployee.getContent();
 
-		return employeeResponseList;
+		return getEmployeeDTO(empList);
 	}
-	
+
+	private List<EmployeeResponseDTO> getEmployeeDTO(List<Employee> empList) {
+		List<EmployeeResponseDTO> responseDTOs = new ArrayList<EmployeeResponseDTO>();
+		for (Employee emp : empList) {
+			responseDTOs.add(prepareEmployeeResponseDTO(emp));
+		}
+		return responseDTOs;
+	}
+
 	public List<EmployeeResponseDTO> getSorted() {
-		
+
 		List<Employee> sortedEmployeeList = employeeRepository.findAll(Sort.by("name"));
 		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
 		Iterator<Employee> i = sortedEmployeeList.iterator();
@@ -79,11 +77,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		return employeeResponseList;
 	}
-	
+
 	public List<EmployeeResponseDTO> getPagedAndSorted() {
 		// Pageable firstPageWithTenElements = PageRequest.of(0, 10, Sort.by("name"));
-		Pageable firstPageWithTenElements = PageRequest.of(0, 10, Sort.by("salary").descending().and(Sort.by("name").ascending()));
-		
+		Pageable firstPageWithTenElements = PageRequest.of(0, 10,
+				Sort.by("salary").descending().and(Sort.by("name").ascending()));
+
 		Page<Employee> employeeList = employeeRepository.findAll(firstPageWithTenElements);
 		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
 		Iterator<Employee> i = employeeList.iterator();
@@ -123,7 +122,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeResponse;
 	}
 
-	public EmployeeRegistrationResponseDTO employeeRegisteration(final EmployeeRegistrationRequestDTO employeeRegisterRequest) {
+	public EmployeeRegistrationResponseDTO employeeRegisteration(
+			final EmployeeRegistrationRequestDTO employeeRegisterRequest) {
 		Employee employee = prepareEmployeeForRegisteration(employeeRegisterRequest);
 
 		// employee saved in db and received response in emp

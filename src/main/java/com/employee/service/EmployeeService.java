@@ -10,7 +10,7 @@ import com.employee.dto.EmployeeResponseDTO;
 public interface EmployeeService {
 	public List<EmployeeResponseDTO> getAll();
 	
-	public List<EmployeeResponseDTO> getPaged();
+	public List<EmployeeResponseDTO> getPaged(int pageNo,int pageSize);
 	
 	public List<EmployeeResponseDTO> getSorted();
 	

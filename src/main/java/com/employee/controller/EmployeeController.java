@@ -37,9 +37,9 @@ public class EmployeeController {
 		return employeeList;
 	}
 	
-	@GetMapping("/paged")
-	public List<EmployeeResponseDTO> getPaged() {
-		List<EmployeeResponseDTO> employeeList = employeeService.getPaged();
+	@GetMapping("/paged/{pageNo}/{pageSize}")
+	public List<EmployeeResponseDTO> getPaged(@PathVariable int pageNo,@PathVariable int pageSize) {
+		List<EmployeeResponseDTO> employeeList = employeeService.getPaged(pageNo,pageSize);
 		log.info("All emplyees fetched -> " + employeeList);
 		return employeeList;
 	}

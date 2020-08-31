@@ -45,8 +45,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeResponseList;
 	}
 	
-	public List<EmployeeResponseDTO> getPaged() {
-		Pageable firstPageWithFiveElements = PageRequest.of(0, 5);
+	public List<EmployeeResponseDTO> getPaged(int pageNo,int pageSize) {
+		Pageable firstPageWithFiveElements = PageRequest.of(pageNo, pageSize);
 		
 		Page<Employee> employeeList = employeeRepository.findAll(firstPageWithFiveElements);
 		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();

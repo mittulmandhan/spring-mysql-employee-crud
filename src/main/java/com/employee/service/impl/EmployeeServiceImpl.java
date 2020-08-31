@@ -81,7 +81,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	public List<EmployeeResponseDTO> getPagedAndSorted() {
-		Pageable firstPageWithTenElements = PageRequest.of(0, 10, Sort.by("name"));
+		// Pageable firstPageWithTenElements = PageRequest.of(0, 10, Sort.by("name"));
+		Pageable firstPageWithTenElements = PageRequest.of(0, 10, Sort.by("salary").descending().and(Sort.by("name").ascending()));
 		
 		Page<Employee> employeeList = employeeRepository.findAll(firstPageWithTenElements);
 		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.dto.EmployeeRegistrationRequestDTO;
@@ -37,8 +38,8 @@ public class EmployeeController {
 		return employeeList;
 	}
 	
-	@GetMapping("/paged/{pageNo}/{pageSize}")
-	public List<EmployeeResponseDTO> getPaged(@PathVariable int pageNo,@PathVariable int pageSize) {
+	@GetMapping("/paged")
+	public List<EmployeeResponseDTO> getPaged(@RequestParam(defaultValue = "0") int pageNo,@RequestParam(defaultValue = "10") int pageSize) {
 		List<EmployeeResponseDTO> employeeList = employeeService.getPaged(pageNo,pageSize);
 		log.info("All emplyees fetched -> " + employeeList);
 		return employeeList;

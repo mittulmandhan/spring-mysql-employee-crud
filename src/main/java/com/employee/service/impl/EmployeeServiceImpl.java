@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import com.employee.dto.EmployeeRegistrationResponseDTO;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.exception.InvalidEmployeeIDException;
+import com.employee.mapper.EmployeeRegistrationMapper;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
@@ -142,13 +144,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	private EmployeeRegistrationResponseDTO prepareEmployeeResponseForRegisteration(Employee employee) {
-		EmployeeRegistrationResponseDTO employeeRegisterResponse = new EmployeeRegistrationResponseDTO();
+//		EmployeeRegistrationResponseDTO employeeRegisterResponse = new EmployeeRegistrationResponseDTO();
 
-		employeeRegisterResponse.setId(employee.getId());
-		employeeRegisterResponse.setName(employee.getName());
-		employeeRegisterResponse.setEmail(employee.getEmail());
-		employeeRegisterResponse.setTeamName(employee.getTeamName());
-		employeeRegisterResponse.setCreatedAt(employee.getCreatedAt());
+		EmployeeRegistrationResponseDTO employeeRegisterResponse = employeeRegistrationMapper
+				.employeeToResponseDTO(employee);
+
+//		employeeRegisterResponse.setId(employee.getId());
+//		employeeRegisterResponse.setName(employee.getName());
+//		employeeRegisterResponse.setEmail(employee.getEmail());
+//		employeeRegisterResponse.setTeamName(employee.getTeamName());
+//		employeeRegisterResponse.setCreatedAt(employee.getCreatedAt());
 
 		return employeeRegisterResponse;
 	}
@@ -164,13 +169,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	private Employee prepareEmployeeForRegisteration(EmployeeRegistrationRequestDTO employeeRegisterRequest) {
-		Employee employee = new Employee();
+//		Employee employee = new Employee();
 
-		employee.setEmail(employeeRegisterRequest.getEmail().toLowerCase());
-		employee.setName(employeeRegisterRequest.getFirstName().trim().toLowerCase() + " "
-				+ employeeRegisterRequest.getLastName().trim().toLowerCase());
-		employee.setTeamName(employeeRegisterRequest.getTeamName().toLowerCase());
-		employee.setPassword(employeeRegisterRequest.getPassword());
+		Employee employee = employeeRegistrationMapper.requestDTOToEmployee(employeeRegisterRequest);
+
+//		employee.setEmail(employeeRegisterRequest.getEmail().toLowerCase());
+//		employee.setName(employeeRegisterRequest.getFirstName().trim().toLowerCase() + " "
+//				+ employeeRegisterRequest.getLastName().trim().toLowerCase());
+//		employee.setTeamName(employeeRegisterRequest.getTeamName().toLowerCase());
+//		employee.setPassword(employeeRegisterRequest.getPassword());
 		return employee;
 	}
 

@@ -29,6 +29,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	EmployeeRegistrationMapper employeeRegistrationMapper = Mappers.getMapper(EmployeeRegistrationMapper.class);
 
 	public List<EmployeeResponseDTO> getAll() {
 		List<Employee> employeeList = employeeRepository.findAll();

@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,7 @@ import com.employee.dto.EmployeeRegistrationResponseDTO;
 import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.exception.InvalidEmployeeIDException;
-import com.employee.mapper.EmployeeRegistrationMapper;
+import com.employee.mapper.EmployeeMapper;
 import com.employee.model.Employee;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
@@ -29,8 +28,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
-	
-	EmployeeRegistrationMapper employeeRegistrationMapper = Mappers.getMapper(EmployeeRegistrationMapper.class);
 
 	public List<EmployeeResponseDTO> getAll() {
 		List<Employee> employeeList = employeeRepository.findAll();
@@ -99,7 +96,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public EmployeeRegistrationResponseDTO employeeRegisteration(
 			final EmployeeRegistrationRequestDTO employeeRegisterRequest) {
-		Employee employee = prepareEmployeeForRegisteration(employeeRegisterRequest);
+		Employee employee = EmployeeMapper.MAPPER.requestDTOToEmployee(employeeRegisterRequest);
 
 		// employee saved in db and received response in emp
 		Employee emp = employeeRepository.save(employee);
@@ -148,7 +145,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRegistrationResponseDTO prepareEmployeeResponseForRegisteration(Employee employee) {
 //		EmployeeRegistrationResponseDTO employeeRegisterResponse = new EmployeeRegistrationResponseDTO();
 
-		EmployeeRegistrationResponseDTO employeeRegisterResponse = employeeRegistrationMapper
+		EmployeeRegistrationResponseDTO employeeRegisterResponse = EmployeeMapper.MAPPER
 				.employeeToResponseDTO(employee);
 
 //		employeeRegisterResponse.setId(employee.getId());
@@ -167,19 +164,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setName(employeeRequest.getName());
 		employee.setSalary(employeeRequest.getSalary());
 		employee.setTeamName(employeeRequest.getTeamName());
-		return employee;
-	}
-
-	private Employee prepareEmployeeForRegisteration(EmployeeRegistrationRequestDTO employeeRegisterRequest) {
-//		Employee employee = new Employee();
-
-		Employee employee = employeeRegistrationMapper.requestDTOToEmployee(employeeRegisterRequest);
-
-//		employee.setEmail(employeeRegisterRequest.getEmail().toLowerCase());
-//		employee.setName(employeeRegisterRequest.getFirstName().trim().toLowerCase() + " "
-//				+ employeeRegisterRequest.getLastName().trim().toLowerCase());
-//		employee.setTeamName(employeeRegisterRequest.getTeamName().toLowerCase());
-//		employee.setPassword(employeeRegisterRequest.getPassword());
 		return employee;
 	}
 

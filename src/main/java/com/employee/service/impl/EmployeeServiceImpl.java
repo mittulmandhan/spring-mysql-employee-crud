@@ -101,7 +101,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// employee saved in db and received response in emp
 		Employee emp = employeeRepository.save(employee);
 
-		EmployeeRegistrationResponseDTO employeeRegisterResponse = prepareEmployeeResponseForRegisteration(emp);
+		EmployeeRegistrationResponseDTO employeeRegisterResponse = EmployeeMapper.MAPPER
+				.employeeToResponseDTO(emp);
 
 		return employeeRegisterResponse;
 	}
@@ -140,21 +141,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeeResponse.setCreatedAt(employee.getCreatedAt());
 		employeeResponse.setLastUpdatedAt(employee.getLastUpdatedAt());
 		return employeeResponse;
-	}
-
-	private EmployeeRegistrationResponseDTO prepareEmployeeResponseForRegisteration(Employee employee) {
-//		EmployeeRegistrationResponseDTO employeeRegisterResponse = new EmployeeRegistrationResponseDTO();
-
-		EmployeeRegistrationResponseDTO employeeRegisterResponse = EmployeeMapper.MAPPER
-				.employeeToResponseDTO(employee);
-
-//		employeeRegisterResponse.setId(employee.getId());
-//		employeeRegisterResponse.setName(employee.getName());
-//		employeeRegisterResponse.setEmail(employee.getEmail());
-//		employeeRegisterResponse.setTeamName(employee.getTeamName());
-//		employeeRegisterResponse.setCreatedAt(employee.getCreatedAt());
-
-		return employeeRegisterResponse;
 	}
 
 	private Employee prepareEmployeeForAdd(final EmployeeRequestDTO employeeRequest) {

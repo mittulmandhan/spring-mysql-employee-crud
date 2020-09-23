@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 
 import com.employee.dto.EmployeeRegistrationRequestDTO;
 import com.employee.dto.EmployeeRegistrationResponseDTO;
+import com.employee.dto.EmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.model.Employee;
 
@@ -24,5 +25,9 @@ public interface EmployeeMapper {
 	EmployeeResponseDTO prepareEmployeeResponseDTO(Employee employee);
 	
 	List<EmployeeResponseDTO> prepareEmployeeResponseDTO(List<Employee> employeeList);
+	
+	Employee prepareEmployeeForAdd(final EmployeeRequestDTO employeeRequest);
+	
+	Employee prepareEmployeeForUpdate(EmployeeRequestDTO employeeRequest);
 	
 }

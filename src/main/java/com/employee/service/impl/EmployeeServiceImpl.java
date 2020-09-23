@@ -60,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public EmployeeResponseDTO add(final EmployeeRequestDTO employeeRequest) {
 
-		Employee employee = prepareEmployeeForAdd(employeeRequest);
+		Employee employee = EmployeeMapper.MAPPER.prepareEmployeeForAdd(employeeRequest);
 		// employee added and response received in emp
 		Employee emp = employeeRepository.save(employee);
 
@@ -82,7 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// validations
 		validateID(employeeRequest.getId());
 
-		Employee employee = prepareEmployeeForUpdate(employeeRequest);
+		Employee employee = EmployeeMapper.MAPPER.prepareEmployeeForUpdate(employeeRequest);
 		// employee updated and response received in emp
 		Employee emp = employeeRepository.save(employee);
 
@@ -95,26 +95,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		validateID(id);
 
 		employeeRepository.deleteById(id);
-	}
-
-	private Employee prepareEmployeeForAdd(final EmployeeRequestDTO employeeRequest) {
-		Employee employee = new Employee();
-
-		employee.setEmail(employeeRequest.getEmail());
-		employee.setName(employeeRequest.getName());
-		employee.setSalary(employeeRequest.getSalary());
-		employee.setTeamName(employeeRequest.getTeamName());
-		return employee;
-	}
-
-	private Employee prepareEmployeeForUpdate(EmployeeRequestDTO employeeRequest) {
-		Employee employee = new Employee();
-
-		employee.setId(employeeRequest.getId());
-		employee.setName(employeeRequest.getName());
-		employee.setSalary(employeeRequest.getSalary());
-		employee.setTeamName(employeeRequest.getTeamName());
-		return employee;
 	}
 
 	private void validateID(final Integer id) {

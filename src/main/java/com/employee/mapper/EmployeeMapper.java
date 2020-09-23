@@ -17,9 +17,9 @@ public interface EmployeeMapper {
 	EmployeeMapper MAPPER = Mappers.getMapper(EmployeeMapper.class);
 
 	@Mappings({@Mapping(target = "name", source = "dto.firstName")})
-	Employee requestDTOToEmployee(EmployeeRegistrationRequestDTO dto);
+	Employee prepareEmployeeForRegisteration(EmployeeRegistrationRequestDTO dto);
 	
-	EmployeeRegistrationResponseDTO employeeToResponseDTO(Employee entity);
+	EmployeeRegistrationResponseDTO prepareEmployeeResponseForRegisteration(Employee entity);
 	
 	EmployeeResponseDTO prepareEmployeeResponseDTO(Employee employee);
 	

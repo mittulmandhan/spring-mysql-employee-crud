@@ -69,12 +69,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public EmployeeRegistrationResponseDTO employeeRegisteration(
 			final EmployeeRegistrationRequestDTO employeeRegisterRequest) {
-		Employee employee = EmployeeMapper.MAPPER.requestDTOToEmployee(employeeRegisterRequest);
+		Employee employee = EmployeeMapper.MAPPER.prepareEmployeeForRegisteration(employeeRegisterRequest);
 
 		// employee saved in db and received response in emp
 		Employee emp = employeeRepository.save(employee);
 
-		return EmployeeMapper.MAPPER.employeeToResponseDTO(emp);
+		return EmployeeMapper.MAPPER.prepareEmployeeResponseForRegisteration(emp);
 	}
 
 	public EmployeeResponseDTO update(final EmployeeRequestDTO employeeRequest) {

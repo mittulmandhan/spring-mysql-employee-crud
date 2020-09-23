@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 
 import com.employee.dto.EmployeeRegistrationRequestDTO;
 import com.employee.dto.EmployeeRegistrationResponseDTO;
+import com.employee.dto.EmployeeResponseDTO;
 import com.employee.model.Employee;
 
 @Mapper(componentModel = "spring")
@@ -17,8 +18,11 @@ public interface EmployeeMapper {
 
 	@Mappings({@Mapping(target = "name", source = "dto.firstName")})
 	Employee requestDTOToEmployee(EmployeeRegistrationRequestDTO dto);
-	List<Employee> requestDTOToEmployee(List<EmployeeRegistrationRequestDTO> dto);
 	
 	EmployeeRegistrationResponseDTO employeeToResponseDTO(Employee entity);
+	
+	EmployeeResponseDTO prepareEmployeeResponseDTO(Employee employee);
+	
+	List<EmployeeResponseDTO> prepareEmployeeResponseDTO(List<Employee> employeeList);
 	
 }

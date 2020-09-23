@@ -1,7 +1,5 @@
 package com.employee.service.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,18 +29,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	public List<EmployeeResponseDTO> getAll() {
 		List<Employee> employeeList = employeeRepository.findAll();
-		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
-		Iterator<Employee> i = employeeList.iterator();
 
-		while (i.hasNext()) {
-			Employee emp = i.next();
-			EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
-
-			// put EmployeeResponseDTO object in employeeResponseList
-			employeeResponseList.add(empResponse);
-		}
-
-		return employeeResponseList;
+		return EmployeeMapper.MAPPER.prepareEmployeeResponseDTO(employeeList);
 	}
 
 	public Page<Employee> getPaged(Pageable pageable) {
@@ -50,20 +38,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	public List<EmployeeResponseDTO> getSorted() {
-
 		List<Employee> sortedEmployeeList = employeeRepository.findAll(Sort.by("name"));
-		List<EmployeeResponseDTO> employeeResponseList = new ArrayList<>();
-		Iterator<Employee> i = sortedEmployeeList.iterator();
 
-		while (i.hasNext()) {
-			Employee emp = i.next();
-			EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
-
-			// put EmployeeResponseDTO object in employeeResponseList
-			employeeResponseList.add(empResponse);
-		}
-
-		return employeeResponseList;
+		return EmployeeMapper.MAPPER.prepareEmployeeResponseDTO(sortedEmployeeList);
 	}
 
 	public Page<Employee> getPagedAndSorted(Pageable pageable) {
@@ -78,9 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Optional<Employee> optional = employeeRepository.findById(id);
 		Employee emp = optional.get();
 
-		EmployeeResponseDTO empResponse = prepareEmployeeResponseDTO(emp);
-
-		return empResponse;
+		return EmployeeMapper.MAPPER.prepareEmployeeResponseDTO(emp);
 	}
 
 	public EmployeeResponseDTO add(final EmployeeRequestDTO employeeRequest) {
@@ -89,9 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// employee added and response received in emp
 		Employee emp = employeeRepository.save(employee);
 
-		EmployeeResponseDTO employeeResponse = prepareEmployeeResponseDTO(emp);
-
-		return employeeResponse;
+		return EmployeeMapper.MAPPER.prepareEmployeeResponseDTO(emp);
 	}
 
 	public EmployeeRegistrationResponseDTO employeeRegisteration(
@@ -101,10 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// employee saved in db and received response in emp
 		Employee emp = employeeRepository.save(employee);
 
-		EmployeeRegistrationResponseDTO employeeRegisterResponse = EmployeeMapper.MAPPER
-				.employeeToResponseDTO(emp);
-
-		return employeeRegisterResponse;
+		return EmployeeMapper.MAPPER.employeeToResponseDTO(emp);
 	}
 
 	public EmployeeResponseDTO update(final EmployeeRequestDTO employeeRequest) {
@@ -116,9 +86,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// employee updated and response received in emp
 		Employee emp = employeeRepository.save(employee);
 
-		EmployeeResponseDTO employeeResponse = prepareEmployeeResponseDTO(emp);
-
-		return employeeResponse;
+		return EmployeeMapper.MAPPER.prepareEmployeeResponseDTO(emp);
 	}
 
 	public void delete(final Integer id) {
@@ -127,20 +95,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		validateID(id);
 
 		employeeRepository.deleteById(id);
-	}
-
-	private EmployeeResponseDTO prepareEmployeeResponseDTO(Employee employee) {
-		EmployeeResponseDTO employeeResponse = new EmployeeResponseDTO();
-
-		// convert Employee to EmployeeResponseDTO
-		employeeResponse.setId(employee.getId());
-		employeeResponse.setEmail(employee.getEmail());
-		employeeResponse.setName(employee.getName());
-		employeeResponse.setSalary(employee.getSalary());
-		employeeResponse.setTeamName(employee.getTeamName());
-		employeeResponse.setCreatedAt(employee.getCreatedAt());
-		employeeResponse.setLastUpdatedAt(employee.getLastUpdatedAt());
-		return employeeResponse;
 	}
 
 	private Employee prepareEmployeeForAdd(final EmployeeRequestDTO employeeRequest) {
